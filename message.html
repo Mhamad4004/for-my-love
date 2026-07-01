@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --amber: #ffb35e;
+    --rose: #ff6fa5;
+    --paper: #f7efe6;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:#05060c;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
+  }
+
+  /* ---------- living background: the video itself, softly blurred ---------- */
+  .scene{ position:fixed; inset:0; overflow:hidden; background:#05060c; }
+  video#bgVideo{
+    position:absolute;
+    top:50%; left:50%;
+    min-width:100%; min-height:100%;
+    width:auto; height:auto;
+    transform:translate(-50%,-50%) scale(1.12); /* scale up so the blur never shows an edge */
+    object-fit:cover;
+    filter: blur(6px) brightness(0.75) saturate(1.05);
+  }
+
+  /* soft vignette so the letter stays readable over the footage */
+  .vignette{
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 38%, rgba(5,5,10,0.25), rgba(5,5,10,0.72) 78%);
+    pointer-events:none;
+  }
+
+  /* ---------- sound toggle: unmutes the video + starts the music layer ---------- */
+  .sound-toggle{
+    position:fixed; top:max(16px, env(safe-area-inset-top));
+    right:max(16px, env(safe-area-inset-right));
+    z-index:10;
+    width:46px; height:46px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.25);
+    background:rgba(10,8,16,0.45);
+    backdrop-filter: blur(6px);
+    color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px;
+    cursor:pointer;
+  }
+  .sound-toggle:active{ transform:scale(.94); }
+
+  /* ---------- message ---------- */
+  .content{
+    position:relative; z-index:2;
+    height:100dvh; width:100%;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    display:flex; justify-content:center;
+    padding: 14vh 6vw 8vh;
+  }
+  .message-card{
+    max-width:560px;
+    width:100%;
+    opacity:0;
+    transition: opacity 0.5s ease;
+  }
+  .message-card.visible{ opacity:1; }
+
+  .eyebrow{
+    text-align:center;
+    color:var(--rose);
+    letter-spacing:3px;
+    font-size:12px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    opacity:.85;
+  }
+  .title{
+    font-family:'Great Vibes', cursive;
+    font-size:clamp(38px, 10vw, 58px);
+    text-align:center;
+    color:var(--paper);
+    text-shadow: 0 0 18px rgba(255,111,165,0.35);
+    margin:0 0 28px;
+  }
+
+  .letter{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:400;
+    font-size:clamp(19px, 4.6vw, 24px);
+    line-height:1.85;
+    color:var(--paper);
+    text-shadow: 0 1px 12px rgba(0,0,0,0.6), 0 0 2px rgba(0,0,0,0.5);
+    letter-spacing:0.2px;
+  }
+  .letter p{ margin:0 0 1.3em; }
+  .letter p:last-child{ margin-bottom:0; }
+  .letter em{ color:var(--amber); font-style:italic; }
+
+  .signoff{
+    margin-top:40px;
+    text-align:center;
+    font-family:'Great Vibes', cursive;
+    font-size:clamp(26px, 6vw, 34px);
+    color:var(--rose);
+  }
+
+  .footer-heart{
+    text-align:center;
+    margin-top:18px;
+    color:var(--paper);
+    opacity:.5;
+    font-size:13px;
+  }
+.text {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #fff6fb;
+    text-align: center; 
+    letter-spacing: 3px;
+    text-shadow: 0 2px 15px rgba(255,105,180,.35);
+}
+  ::-webkit-scrollbar{ width:0; }
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <video id="bgVideo" autoplay muted loop playsinline webkit-playsinline
+         src="rain-video.mp4"></video>
+  <div class="vignette"></div>
+</div>
+
+<button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">🔇</button>
+
+<div class="content">
+  <div class="message-card" id="messageCard">
+    <div class="eyebrow">for you, in the rain</div>
+    <div class="title">ROYA</div>
+
+    <div class="letter">
+      <!-- ============================================================
+           ✍️  WRITE YOUR MESSAGE HERE.
+           Replace the example paragraphs below with your own words.
+           Wrap each paragraph in <p>...</p> tags — as many as you like,
+           the page will scroll for longer letters.
+           Wrap any word in <em>...</em> to give it a soft amber glow.
+           ============================================================ -->
+
+      <p class="text">To the rose that blooms in every season of my heart.</p>
+      <p>Azizakam pesh dast pe krdn ba xwendnawa tkaya la dasta rast bashi Sarawa panja bne baw spikaraya u baw musicawa ba arami dast bka ba xwendnawa</p>
+      <p>Agar ama axwenitawa awa au shwena bchukat dozyawa kawa bo tom drust krdwa .. amam drust krd chunka birt akam shwenekm awist ka wshakanm tanha bgana lay to chunka har namayak bmawe binerm abe la regay kasani trawa pet bgan .. zor sht haya ka xozga axwazm hamu rozhek pet blem balam namawe hich kaseki tr au wshana bxwenetawa .. labar awa am shwenam drust krd tanha bo to .. shwenek ka dlm btwanet ba azadi qsa bkat .. amawe shtek bzanit ka hargiz nagoret grng nya chi ru bdat mn hamisha lagaltm agar zardaxana bkay mn pedakanm lagalt agar bgrit xozga axwazm lalat bm bo srinaway frmeskakant .. azanm manduyt balam hiwadarm birt bet ka kasek zyatr laway biri le akaitawa xoshi aweyt .. agar hamu jihan dzhayatit bka mn heshta la tanishtt wastawm duri natwanet hasti mn bgoret kat natwanet hasti mn bgoret keshakan natwann bigorn hich shtek natwanet wam le bkat waz la grngi Dan ba to bhenm ... To la bir krdnawam dayt law satay ka haldastm ta xawm le dakawet .. prsyar la xom akam aya xwardni xwardwa aya salamata ! .. mn hamu rozhek nza bo to dakam baw hiwayay zhyan lagalt mihrabantr bet u rozhek bgait baw aramyay ka shaistay awayt .. tkaya hargiz wa bir makawa ka to tanyayt tananat katek natwanm namasht bo bnerm tananat katek hamu shtek qurs bet .. dlm heshta lagal Toya hargiz ru nada ka mn rozhek waz la grngi Dan ba to bhenm .. azanm zhyant qurs bwa azanm ka ba chan shteka te pariwit ba taibat am chan rozha ka zor bot naxosh bwa .. lawanaya natwanm hamu keshayak charasar bkam balam balen Adam ka hargiz waz la birhenanawat nahenm u hamisha birt ahenmawa ka to chanek banrxi bom u chanek grngi bom u chanek xoshawisti bom zhyani to zor grnga bo mn .. mn tom xosh nawet tanha la rozhani xoshda .. xoshm aweyt la rozhani saxtda xoshm aweyt katek pe akani katek agrit katek bahezi tananat katek hast ba lawazi akayt .. supas bo away ka basheki la zhyanm .. bardawam ba law bawaray ka hamisha pekawa abin bardawam ba law bawaray ka am shtana te aparn u rozhi xosh den .. mn bardawam abm la sharkrdn bo dahatumanu hargiz la halbzhardni to nawastm .. har katek ka birt krdm bgarewa bo am websiteau am wshana bxwenawa u labirt bet ka kasek haya ba quli toy xosh awet u hamisha lagalta u hamisha bir la to akatawa .. grng nya Chand rozh te apare u zhyan Chand ba saxti amenetawa yak sht hamisha wak xoy amenetawa ( xoshwistni Toya ) mn shanazit pewa akam mn bawarm pet haya wa mn hamisha lera abm bot u hamisha amenmawa bo hata hataya .. zorm xosh aweyt .</p>
+      
+
+      <!-- ============================================================
+           END OF MESSAGE
+           ============================================================ -->
+    </div>
+
+    <div class="signoff">— always yours</div>
+    <div class="footer-heart">♡</div>
+  </div>
+</div>
+
+<script>
+  // ---------- reveal the letter with a 0.5s opacity fade ----------
+  window.addEventListener('DOMContentLoaded', () => {
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document.getElementById('messageCard').classList.add('visible');
+      }, 150);
+    });
+  });
+
+  // ================================================================
+  // Sound: tapping the button unmutes the video's own audio (its
+  // natural rain sound) and, alongside it, starts a soft, cozy
+  // background pad synthesized in the browser.
+  //
+  // Note on the YouTube link you sent: it's a copyrighted "Cozy
+  // Reading Nook — Smooth Jazz & Rain" ambience track, so it can't be
+  // downloaded or embedded here. What plays instead is a different,
+  // gentle warm-piano-style layer built with the Web Audio API — no
+  // external file needed, and nothing that can go missing or break a
+  // copyright rule. If you'd rather use a real song you have the
+  // rights to, see the note at the very bottom of this file.
+  // ================================================================
+  const bgVideo = document.getElementById('bgVideo');
+  const soundBtn = document.getElementById('soundToggle');
+
+  let audioCtx, master, musicStarted = false;
+
+
+
+const music = new Audio('sound.mp3');
+music.loop = true;
+music.volume = 0.35;
+
+soundBtn.addEventListener('click', async () => {
+    const isMuted = bgVideo.muted;
+    if(isMuted){
+      bgVideo.muted = false;
+      bgVideo.volume = 1;
+      bgVideo.play().catch(()=>{});
+      music.play().catch(()=>{});
+      soundBtn.textContent = '🔊';
+    } else {
+      bgVideo.muted = true;
+      music.pause();
+      soundBtn.textContent = '🔇';
+    }
+});
+
+  // -----------------------------------------------------------------
+  // Want to use a real song you own the rights to (instead of the
+  // synthesized piano layer) as background music under the video's
+  // own sound? Drop an mp3 next to this page (e.g. "music.mp3") and
+  // replace buildCozyPiano(...) above with:
+  //   const music = new Audio('music.mp3'); music.loop = true;
+  //   music.volume = 0.35; music.play();
+  // -----------------------------------------------------------------
+</script>
+
+</body>
+</html>
